@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  api_hello_dev:
+    container_name: api_hello_dev
+    restart: always
+    build: .
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/hello-jenkins-python/
+      - static_volume:/hello-jenkins-python/static
+    command: /hello-jenkins-python/run.sh
+
+volumes:
+  static_volume:
+  media_volume:
