@@ -3,8 +3,10 @@ node {
   git url: 'https://github.com/helpthx/hello-jenkins'
 
   stage 'build'
-  docker.build('api_hello_dev')
-
-  stage 'deploy'
-  sh './run.sh'
+  checkout scm
+  def customImage = docker.build('api_hello_dev')
+  customImage.inside {
+        sh './run.sh'
+    }
+		
 }
