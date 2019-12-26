@@ -4,9 +4,27 @@ node {
 
   stage 'build'
   checkout scm
+  
   def customImage = docker.build('api_hello_dev')
+	
+  stage 'Migrating'
+
   customImage.inside {
-        sh './run.sh'
+        sh 'python helloworld_project/manage.py migrate'
+    }
+
+  stage 'Make Migrations'
+
+  customImage.inside {
+        sh 'python helloworld_project/manage.py makemigrations'
+    }
+	
+  stage 'Running'
+
+  customImage.inside {
+        sh 'python helloworld_project/manage.py runserver'
+	sh 'sleep 5'
+	sh 'docker kill api_hello_dev'
     }
 		
 }
