@@ -6,5 +6,5 @@ node {
   docker.build('api_hello_dev')
 
   stage 'deploy'
-  sh './deploy.sh'
+  sh './run.sh'
 }
