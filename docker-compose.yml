@@ -1,17 +1,14 @@
-version: '3'
-
+version: "2"
 services:
-  api_hello_dev:
-    container_name: api_hello_dev
-    restart: always
-    build: .
+  jenkins:
+    image: jenkinsci/blueocean
+    container_name: jenkins_hello_world
+    user: root
     ports:
-      - 8000:8000
+      - "8080:8080"
+      - "8443:8443"
+      - "50000:50000"
     volumes:
-      - .:/hello-jenkins-python/
-      - static_volume:/hello-jenkins-python/static
-    command: /hello-jenkins-python/run.sh
-
-volumes:
-  static_volume:
-  media_volume:
+      - ./jenkins_data:/var/jenkins_home
+      - ./home:/home
+      - /var/run/docker.sock:/var/run/docker.sock
