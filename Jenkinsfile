@@ -6,6 +6,12 @@ node {
   checkout scm
   
   def customImage = docker.build('api_hello_dev')
+
+  stage 'Liting'
+
+  customImage.inside {
+        sh 'flake8 .'
+    }
 	
   stage 'Migrating'
 
